@@ -13,6 +13,7 @@ async def openbox(token):
             return await response.json()
 
 async def opener():
+    opened = 0
     token = input("Discord Token: ")
     while True:
         await asyncio.sleep(2.2)
@@ -27,7 +28,7 @@ async def opener():
 
         if 'retry_after' in res:
             print(f"Rate limited for: {res['retry_after']}s")
-            await asyncio.sleep(res['retry_after'] - 5)
+            await asyncio.sleep(max(res['retry_after'] - 5, 0))
             continue
 
         prize = res.get('opened_item')
@@ -36,17 +37,18 @@ async def opener():
             continue
 
         prize_map = {
-            '1214340999644446726': 'Quack!!', 
-            '1214340999644446724': '⮕⬆⬇⮕⬆⬇', 
+            '1214340999644446726': 'Quack!!',
+            '1214340999644446724': '⮕⬆⬇⮕⬆⬇',
             '1214340999644446722': 'Wump Shell',
-            '1214340999644446720': 'Buster Blade', 
-            '1214340999644446725': 'Power Helmet', 
+            '1214340999644446720': 'Buster Blade',
+            '1214340999644446725': 'Power Helmet',
             '1214340999644446723': 'Speed Boost',
-            '1214340999644446721': 'Cute Plushie', 
-            '1214340999644446728': 'Dream Hammer', 
+            '1214340999644446721': 'Cute Plushie',
+            '1214340999644446728': 'Dream Hammer',
             '1214340999644446727': 'OHHHHH BANANA'
         }
-        print('Opened:', prize_map.get(prize))
+        opened += 1
+        print(str(opened) + "|" + 'Opened:', prize_map.get(prize))
 
 if __name__ == "__main__":
     asyncio.run(opener())
